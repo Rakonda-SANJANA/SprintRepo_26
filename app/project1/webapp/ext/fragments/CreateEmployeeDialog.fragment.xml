@@ -1,0 +1,108 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="createEmployeeDialog"
+        title="Add Employee"
+        contentWidth="32rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox
+                id="createEmployeeForm"
+                class="sapUiMediumMargin">
+
+                <Label
+                    id="createEmployeeNameLabel"
+                    text="Full Name"
+                    required="true"
+                    labelFor="createEmployeeNameInput" />
+
+                <Input
+                    id="createEmployeeNameInput"
+                    placeholder="Enter employee full name"
+                    maxLength="100"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createEmployeeEmailLabel"
+                    text="Email"
+                    required="true"
+                    labelFor="createEmployeeEmailInput" />
+
+                <Input
+                    id="createEmployeeEmailInput"
+                    type="Email"
+                    placeholder="Enter employee email"
+                    maxLength="100"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createEmployeePhoneLabel"
+                    text="Phone"
+                    labelFor="createEmployeePhoneInput" />
+
+                <Input
+                    id="createEmployeePhoneInput"
+                    type="Tel"
+                    placeholder="Enter phone number"
+                    maxLength="15"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createEmployeeDepartmentLabel"
+                    text="Department"
+                    required="true"
+                    labelFor="createEmployeeDepartmentSelect" />
+
+                <Select
+                    id="createEmployeeDepartmentSelect"
+                    width="100%"
+                    items="{/Departments}"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="createEmployeeDepartmentItem"
+                        key="{ID}"
+                        text="{name}" />
+
+                </Select>
+
+                <Label
+                    id="createEmployeeLocationLabel"
+                    text="Location"
+                    required="true"
+                    labelFor="createEmployeeLocationInput" />
+
+                <Input
+                    id="createEmployeeLocationInput"
+                    placeholder="Example: Bangalore"
+                    maxLength="100" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="saveEmployeeButton"
+                text="Create"
+                type="Emphasized" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="cancelCreateEmployeeButton"
+                text="Cancel" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

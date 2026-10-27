@@ -1,0 +1,65 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="createVendorDialog"
+        title="Add Vendor"
+        contentWidth="32rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox
+                id="createVendorForm"
+                class="sapUiMediumMargin">
+
+                <Label
+                    id="createVendorNameLabel"
+                    text="Vendor Name"
+                    required="true"
+                    labelFor="createVendorNameInput" />
+
+                <Input
+                    id="createVendorNameInput"
+                    placeholder="Enter vendor name"
+                    maxLength="100"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createVendorEmailLabel"
+                    text="Vendor Email"
+                    required="true"
+                    labelFor="createVendorEmailInput" />
+
+                <Input
+                    id="createVendorEmailInput"
+                    type="Email"
+                    placeholder="Enter vendor email"
+                    maxLength="100" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="saveVendorButton"
+                text="Create"
+                type="Emphasized" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="cancelCreateVendorButton"
+                text="Cancel" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

@@ -1,0 +1,103 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="createAssetRequestDialog"
+        title="Request Asset"
+        contentWidth="34rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox
+                id="createAssetRequestForm"
+                class="sapUiMediumMargin">
+
+                <Label
+                    id="assetRequestCategoryLabel"
+                    text="Asset Category"
+                    required="true"
+                    labelFor="assetRequestCategorySelect" />
+
+                <Select
+                    id="assetRequestCategorySelect"
+                    width="100%"
+                    items="{/AssetCategories}"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="assetRequestCategoryItem"
+                        key="{ID}"
+                        text="{name}" />
+
+                </Select>
+
+                <Label
+                    id="assetRequestPriorityLabel"
+                    text="Priority"
+                    required="true"
+                    labelFor="assetRequestPrioritySelect" />
+
+                <Select
+                    id="assetRequestPrioritySelect"
+                    width="100%"
+                    selectedKey="MEDIUM"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="assetRequestPriorityLowItem"
+                        key="LOW"
+                        text="Low" />
+
+                    <core:Item
+                        id="assetRequestPriorityMediumItem"
+                        key="MEDIUM"
+                        text="Medium" />
+
+                    <core:Item
+                        id="assetRequestPriorityHighItem"
+                        key="HIGH"
+                        text="High" />
+
+                </Select>
+
+                <Label
+                    id="assetRequestReasonLabel"
+                    text="Business Reason"
+                    required="true"
+                    labelFor="assetRequestReasonInput" />
+
+                <TextArea
+                    id="assetRequestReasonInput"
+                    placeholder="Explain why the asset is required"
+                    rows="5"
+                    maxLength="1000"
+                    growing="true"
+                    growingMaxLines="7" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="submitAssetRequestButton"
+                text="Submit Request"
+                type="Emphasized" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="cancelAssetRequestButton"
+                text="Cancel" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

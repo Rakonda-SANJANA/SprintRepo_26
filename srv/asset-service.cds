@@ -10,6 +10,7 @@ service AssetManagementService {
     entity Employees          as projection on db.Employees;
     entity Vendors            as projection on db.Vendors;
     entity AssetCategories    as projection on db.AssetCategories;
+    entity AssetRequests as projection on db.AssetRequests;
 
     entity Assets as projection on db.Assets
     {
@@ -28,9 +29,34 @@ service AssetManagementService {
     'Manager'
 ]
         action AssignAsset(
-            employeeID : UUID,
-            distributionDate : Date
-        );
+    employeeID : UUID @Common.ValueList : {
+        CollectionPath : 'Employees',
+        Parameters : [
+            {
+                $Type : 'Common.ValueListParameterInOut',
+                LocalDataProperty : employeeID,
+                ValueListProperty : 'ID'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'fullName'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'email'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'location'
+            },
+            {
+                $Type : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'status'
+            }
+        ]
+    },
+    distributionDate : Date
+);
 
 
         @requires: [
@@ -92,6 +118,122 @@ service AssetManagementService {
     entity OwnershipLedgers   as projection on db.OwnershipLedgers;
     entity MaintenanceRecords as projection on db.MaintenanceRecords;
     entity ArchiveRecords     as projection on db.ArchiveRecords;
+
+
+
+@requires: 'Admin'
+action CreateAsset(
+    assetTag       : String(20),
+    serialNumber   : String(50),
+    categoryID     : UUID,
+    vendorID       : UUID,
+    model           : String(100),
+    purchaseDate   : Date,
+    purchaseCost   : Decimal(10,2),
+    warrantyExpiry : Date
+) returns {
+    ID       : UUID;
+    assetTag : String(20);
+    status   : String;
+};
+
+@requires: 'Admin'
+action CreateEmployee(
+    fullName     : String(100),
+    email        : String(100),
+    phone        : String(15),
+    departmentID : UUID,
+    location     : String(100)
+) returns {
+    ID       : UUID;
+    fullName : String(100);
+    status   : String;
+};
+
+@requires: 'Admin'
+action CreateVendor(
+    name  : String(100),
+    email : String(100)
+) returns {
+    ID    : UUID;
+    name  : String(100);
+    email : String(100);
+};
+
+@requires: 'Admin'
+action CreateDepartment(
+    name       : String(80),
+    costCenter : String(20)
+) returns {
+    ID         : UUID;
+    name       : String(80);
+    costCenter : String(20);
+};
+
+
+
+@requires: 'Employee'
+action CreateAssetRequest(
+    categoryID : UUID,
+    reason     : String,
+    priority   : String
+) returns {
+    ID            : UUID;
+    requestedDate : Date;
+    status        : String;
+};
+
+
+
+@requires: 'Manager'
+action ReviewAssetRequest(
+    requestID      : UUID,
+    decision       : String,
+    managerRemarks : String
+) returns {
+    ID      : UUID;
+    status  : String;
+    message : String;
+};
+
+
+@requires: 'Manager'
+function GetManagerAssetRequests() returns array of {
+    ID             : UUID;
+    employeeID     : UUID;
+    employeeName   : String(100);
+    departmentName : String(80);
+    categoryID     : UUID;
+    categoryName   : String(50);
+    reason         : String;
+    priority       : String;
+    requestedDate  : Date;
+    status         : String;
+    managerRemarks : String;
+};
+
+@requires: 'Employee'
+function GetMyAssignedAssets() returns array of {
+    ID       : UUID;
+    assetTag : String(20);
+    model    : String(100);
+    status   : String;
+};
+
+@requires: 'Employee'
+action RaiseMaintenanceRequest(
+    assetID          : UUID,
+    maintenanceType  : String,
+    description      : String,
+    serviceVendorID  : UUID,
+    coveredByWarranty: Boolean,
+    nextDueDate      : Date
+) returns {
+    maintenanceRecordID : UUID;
+    assetID             : UUID;
+    status              : String;
+};
+
 
     @requires: 'Admin'
 function GetAdminDashboard() returns {

@@ -1,0 +1,206 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="reviewAssetRequestsDialog"
+        title="Review Asset Requests"
+        contentWidth="70rem"
+        contentHeight="32rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <Table
+                id="managerAssetRequestsTable"
+                items="{managerAssetRequests>/}"
+                growing="true"
+                growingThreshold="20"
+                noDataText="No asset requests found">
+
+                <headerToolbar>
+
+                    <OverflowToolbar
+                        id="managerAssetRequestsToolbar">
+
+                        <Title
+                            id="managerAssetRequestsTitle"
+                            text="Department Asset Requests"
+                            level="H3" />
+
+                        <ToolbarSpacer
+                            id="managerAssetRequestsSpacer" />
+
+                        <ObjectStatus
+                            id="managerAssetRequestsCount"
+                            text="Requests: {= ${managerAssetRequests>/}.length }"
+                            state="Information" />
+
+                    </OverflowToolbar>
+
+                </headerToolbar>
+
+                <columns>
+
+                    <Column
+                        id="assetRequestEmployeeColumn"
+                        width="10rem">
+
+                        <Text
+                            id="assetRequestEmployeeColumnText"
+                            text="Employee" />
+
+                    </Column>
+
+                    <Column
+                        id="assetRequestCategoryColumn"
+                        width="9rem">
+
+                        <Text
+                            id="assetRequestCategoryColumnText"
+                            text="Category" />
+
+                    </Column>
+
+                    <Column
+                        id="assetRequestReasonColumn"
+                        width="18rem">
+
+                        <Text
+                            id="assetRequestReasonColumnText"
+                            text="Business Reason" />
+
+                    </Column>
+
+                    <Column
+                        id="assetRequestPriorityColumn"
+                        width="7rem">
+
+                        <Text
+                            id="assetRequestPriorityColumnText"
+                            text="Priority" />
+
+                    </Column>
+
+                    <Column
+                        id="assetRequestDateColumn"
+                        width="9rem">
+
+                        <Text
+                            id="assetRequestDateColumnText"
+                            text="Requested Date" />
+
+                    </Column>
+
+                    <Column
+                        id="assetRequestStatusColumn"
+                        width="8rem">
+
+                        <Text
+                            id="assetRequestStatusColumnText"
+                            text="Status" />
+
+                    </Column>
+
+                </columns>
+
+                <items>
+
+                    <ColumnListItem
+                        id="managerAssetRequestRow"
+                        type="Active"
+                        press=".onSelectAssetRequest">
+
+                        <cells>
+
+                            <ObjectIdentifier
+                                id="managerAssetRequestEmployee"
+                                title="{managerAssetRequests>employeeName}"
+                                text="{managerAssetRequests>departmentName}" />
+
+                            <Text
+                                id="managerAssetRequestCategory"
+                                text="{managerAssetRequests>categoryName}" />
+
+                            <Text
+                                id="managerAssetRequestReason"
+                                text="{managerAssetRequests>reason}"
+                                wrapping="true"
+                                maxLines="3"
+                                tooltip="{managerAssetRequests>reason}" />
+
+                            <ObjectStatus
+                                id="managerAssetRequestPriority"
+                                text="{managerAssetRequests>priority}" />
+
+                            <Text
+                                id="managerAssetRequestDate"
+                                text="{managerAssetRequests>requestedDate}" />
+
+                            <ObjectStatus
+                                id="managerAssetRequestStatus"
+                                text="{managerAssetRequests>status}"
+                                state="{
+                                    path: 'managerAssetRequests>status',
+                                    formatter: '.formatAssetRequestStatus'
+                                }" />
+
+                        </cells>
+
+                    </ColumnListItem>
+
+                </items>
+
+            </Table>
+
+                </content>
+
+        <subHeader>
+
+            <Toolbar
+                id="assetRequestDecisionToolbar">
+
+                <Label
+                    id="assetRequestRemarksLabel"
+                    text="Manager Remarks"
+                    labelFor="assetRequestRemarksInput" />
+
+                <Input
+                    id="assetRequestRemarksInput"
+                    width="24rem"
+                    maxLength="500"
+                    placeholder="Enter approval or rejection remarks" />
+
+                <ToolbarSpacer
+                    id="assetRequestDecisionSpacer" />
+
+                <Button
+                    id="approveAssetRequestButton"
+                    text="Approve"
+                    icon="sap-icon://accept"
+                    type="Accept"
+                    enabled="false" />
+
+                <Button
+                    id="rejectAssetRequestButton"
+                    text="Reject"
+                    icon="sap-icon://decline"
+                    type="Reject"
+                    enabled="false" />
+
+            </Toolbar>
+
+        </subHeader>
+
+        <endButton>
+
+            <Button
+                id="closeAssetRequestsButton"
+                text="Close" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

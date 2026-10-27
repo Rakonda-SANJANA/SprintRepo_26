@@ -176,6 +176,12 @@
                     "type": "ResponsiveTable"
                   },
                   "actions": {
+                    "CreateAsset": {
+  "text": "Add Asset",
+  "press": "project1.ext.controller.ListReport.onCreateAsset",
+  "requiresSelection": false,
+  "visible": "{user>/isAdmin}"
+},
                     "BackToSourceDashboard": {
                       "text": "Back",
                       "press": "project1.ext.controller.ListReport.onBackToSourceDashboard",

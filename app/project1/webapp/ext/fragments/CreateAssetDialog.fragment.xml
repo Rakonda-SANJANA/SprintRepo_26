@@ -1,0 +1,152 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="createAssetDialog"
+        title="Add Asset"
+        contentWidth="32rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox
+                id="createAssetForm"
+                class="sapUiMediumMargin">
+
+                <Label
+                    id="createAssetTagLabel"
+                    text="Asset Tag"
+                    required="true"
+                    labelFor="createAssetTagInput" />
+
+                <Input
+                    id="createAssetTagInput"
+                    placeholder="Example: AST003"
+                    maxLength="20"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createSerialNumberLabel"
+                    text="Serial Number"
+                    required="true"
+                    labelFor="createSerialNumberInput" />
+
+                <Input
+                    id="createSerialNumberInput"
+                    placeholder="Example: SN003"
+                    maxLength="50"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createCategoryLabel"
+                    text="Category"
+                    required="true"
+                    labelFor="createCategorySelect" />
+
+                <Select
+                    id="createCategorySelect"
+                    width="100%"
+                    items="{/AssetCategories}"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="createCategoryItem"
+                        key="{ID}"
+                        text="{name}" />
+
+                </Select>
+
+                <Label
+                    id="createVendorLabel"
+                    text="Vendor"
+                    required="true"
+                    labelFor="createVendorSelect" />
+
+                <Select
+                    id="createVendorSelect"
+                    width="100%"
+                    items="{/Vendors}"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="createVendorItem"
+                        key="{ID}"
+                        text="{name}" />
+
+                </Select>
+
+                <Label
+                    id="createModelLabel"
+                    text="Model"
+                    required="true"
+                    labelFor="createModelInput" />
+
+                <Input
+                    id="createModelInput"
+                    placeholder="Enter asset model"
+                    maxLength="100"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createPurchaseDateLabel"
+                    text="Purchase Date"
+                    required="true"
+                    labelFor="createPurchaseDatePicker" />
+
+                <DatePicker
+                    id="createPurchaseDatePicker"
+                    width="100%"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="medium"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createPurchaseCostLabel"
+                    text="Purchase Cost"
+                    labelFor="createPurchaseCostInput" />
+
+                <Input
+                    id="createPurchaseCostInput"
+                    type="Number"
+                    placeholder="Enter purchase cost"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createWarrantyExpiryLabel"
+                    text="Warranty Expiry"
+                    labelFor="createWarrantyExpiryPicker" />
+
+                <DatePicker
+                    id="createWarrantyExpiryPicker"
+                    width="100%"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="medium" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="saveAssetButton"
+                text="Create"
+                type="Emphasized"
+                 />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="cancelCreateAssetButton"
+                text="Cancel"
+                />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

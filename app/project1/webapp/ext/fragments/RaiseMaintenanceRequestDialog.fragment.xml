@@ -1,0 +1,144 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="raiseMaintenanceRequestDialog"
+        title="Raise Maintenance Request"
+        contentWidth="36rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox
+                id="raiseMaintenanceRequestForm"
+                class="sapUiMediumMargin">
+
+                <Label
+                    id="maintenanceAssetLabel"
+                    text="Assigned Asset"
+                    required="true"
+                    labelFor="maintenanceAssetSelect" />
+
+                <Select
+                    id="maintenanceAssetSelect"
+                    width="100%"
+                    items="{myAssignedAssets>/}"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="maintenanceAssetItem"
+                        key="{myAssignedAssets>ID}"
+                        text="{= ${myAssignedAssets>assetTag} + ' - ' + ${myAssignedAssets>model} }" />
+
+                </Select>
+
+                <Label
+                    id="maintenanceTypeLabel"
+                    text="Maintenance Type"
+                    required="true"
+                    labelFor="maintenanceTypeSelect" />
+
+                <Select
+                    id="maintenanceTypeSelect"
+                    width="100%"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="maintenanceTypePreventiveItem"
+                        key="PREVENTIVE"
+                        text="Preventive" />
+
+                    <core:Item
+                        id="maintenanceTypeCorrectiveItem"
+                        key="CORRECTIVE"
+                        text="Corrective" />
+
+                    <core:Item
+                        id="maintenanceTypeRepairItem"
+                        key="REPAIR"
+                        text="Repair" />
+
+                    <core:Item
+                        id="maintenanceTypeUpgradeItem"
+                        key="UPGRADE"
+                        text="Upgrade" />
+
+                </Select>
+
+                <Label
+                    id="maintenanceDescriptionLabel"
+                    text="Description"
+                    required="true"
+                    labelFor="maintenanceDescriptionInput" />
+
+                <TextArea
+                    id="maintenanceDescriptionInput"
+                    placeholder="Describe the maintenance issue"
+                    rows="4"
+                    maxLength="1000"
+                    growing="true"
+                    growingMaxLines="6"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="maintenanceVendorLabel"
+                    text="Service Vendor"
+                    labelFor="maintenanceVendorSelect" />
+
+                <Select
+                    id="maintenanceVendorSelect"
+                    width="100%"
+                    items="{/Vendors}"
+                    class="sapUiTinyMarginBottom">
+
+                    <core:Item
+                        id="maintenanceVendorItem"
+                        key="{ID}"
+                        text="{name}" />
+
+                </Select>
+
+                <CheckBox
+                    id="maintenanceWarrantyCheckBox"
+                    text="Covered by Warranty"
+                    selected="false"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="maintenanceNextDueDateLabel"
+                    text="Next Due Date"
+                    required="true"
+                    labelFor="maintenanceNextDueDatePicker" />
+
+                <DatePicker
+                    id="maintenanceNextDueDatePicker"
+                    width="100%"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="medium" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="submitMaintenanceRequestButton"
+                text="Submit"
+                type="Emphasized" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="cancelMaintenanceRequestButton"
+                text="Cancel" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

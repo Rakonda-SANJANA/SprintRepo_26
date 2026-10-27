@@ -1,0 +1,64 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="createDepartmentDialog"
+        title="Add Department"
+        contentWidth="32rem"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox
+                id="createDepartmentForm"
+                class="sapUiMediumMargin">
+
+                <Label
+                    id="createDepartmentNameLabel"
+                    text="Department Name"
+                    required="true"
+                    labelFor="createDepartmentNameInput" />
+
+                <Input
+                    id="createDepartmentNameInput"
+                    placeholder="Example: Human Resources"
+                    maxLength="80"
+                    class="sapUiTinyMarginBottom" />
+
+                <Label
+                    id="createDepartmentCostCenterLabel"
+                    text="Cost Center"
+                    required="true"
+                    labelFor="createDepartmentCostCenterInput" />
+
+                <Input
+                    id="createDepartmentCostCenterInput"
+                    placeholder="Example: CC300"
+                    maxLength="20" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="saveDepartmentButton"
+                text="Create"
+                type="Emphasized" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="cancelCreateDepartmentButton"
+                text="Cancel" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

@@ -18,6 +18,38 @@
                 id="employeeDashboardVBox"
                 class="sapUiMediumMargin">
 
+
+
+
+<Toolbar
+    id="employeeMaintenanceRequestToolbar"
+    class="sapUiSmallMarginBottom">
+
+    <Title
+        id="employeeMaintenanceRequestToolbarTitle"
+        text="Asset Support"
+        level="H3" />
+
+    <ToolbarSpacer
+        id="employeeMaintenanceRequestToolbarSpacer" />
+
+
+        <Button
+    id="employeeRequestAssetButton"
+    text="Request Asset"
+    icon="sap-icon://add-product"
+    press=".onRequestAsset" />
+
+    <Button
+        id="employeeRaiseMaintenanceButton"
+        text="Raise Maintenance Request"
+        icon="sap-icon://wrench"
+        type="Emphasized"
+        press=".onRaiseMaintenanceRequest" />
+
+</Toolbar>
+
+
                 <!-- Employee KPI Cards -->
 
                 <Title

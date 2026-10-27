@@ -72,6 +72,44 @@
 
                 </Toolbar>
 
+                <!-- Master Data Management -->
+
+<Toolbar
+    id="adminMasterDataToolbar"
+    class="sapUiSmallMarginBottom">
+
+    <Title
+        id="adminMasterDataToolbarTitle"
+        text="Master Data Management"
+        level="H3" />
+
+    <ToolbarSpacer
+        id="adminMasterDataToolbarSpacer" />
+
+    <Button
+        id="adminAddEmployeeButton"
+        text="Add Employee"
+        icon="sap-icon://add-employee"
+        type="Emphasized"
+        visible="{user>/isAdmin}"
+        press=".onAddEmployee" />
+
+        <Button
+    id="adminAddVendorButton"
+    text="Add Vendor"
+    icon="sap-icon://supplier"
+    visible="{user>/isAdmin}"
+    press=".onAddVendor" />
+
+    <Button
+    id="adminAddDepartmentButton"
+    text="Add Department"
+    icon="sap-icon://org-chart"
+    visible="{user>/isAdmin}"
+    press=".onAddDepartment" />
+
+</Toolbar>
+
                 <!-- Admin KPI Cards -->
 
                 <Title

@@ -14,6 +14,20 @@ type AssetStatus : String enum {
     ARCHIVED;
 };
 
+
+type AssetRequestStatus : String enum {
+    PENDING;
+    APPROVED;
+    REJECTED;
+    FULFILLED;
+};
+
+type AssetRequestPriority : String enum {
+    LOW;
+    MEDIUM;
+    HIGH;
+};
+
 type EmployeeStatus : String enum {
     ACTIVE;
     INACTIVE;
@@ -153,6 +167,35 @@ entity Assets : cuid, managed {
                             on archiveRecords.asset = $self;
 }
 
+
+
+
+/* =========================
+   ASSET REQUESTS
+========================= */
+
+entity AssetRequests : cuid, managed {
+
+    requestedBy       : Association to Employees;
+
+    category          : Association to AssetCategories;
+
+    reason            : LargeString;
+
+    priority          : AssetRequestPriority;
+
+    requestedDate     : Date;
+
+    status            : AssetRequestStatus;
+
+    reviewedBy        : Association to Employees;
+
+    reviewedAt        : Timestamp;
+
+    managerRemarks    : LargeString;
+
+    fulfilledAsset    : Association to Assets;
+}
 
 /* =========================
    ASSET ASSIGNMENT

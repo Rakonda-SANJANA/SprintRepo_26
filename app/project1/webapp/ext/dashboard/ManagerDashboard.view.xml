@@ -18,6 +18,29 @@
                 id="managerDashboardVBox"
                 class="sapUiMediumMargin">
 
+
+
+                <Toolbar
+    id="managerAssetRequestToolbar"
+    class="sapUiSmallMarginBottom">
+
+    <Title
+        id="managerAssetRequestToolbarTitle"
+        text="Asset Requests"
+        level="H3" />
+
+    <ToolbarSpacer
+        id="managerAssetRequestToolbarSpacer" />
+
+    <Button
+        id="managerReviewAssetRequestsButton"
+        text="Review Asset Requests"
+        icon="sap-icon://approvals"
+        type="Emphasized"
+        press=".onReviewAssetRequests" />
+
+</Toolbar>
+
                 <!-- Manager KPI Cards -->
 
                 <Title

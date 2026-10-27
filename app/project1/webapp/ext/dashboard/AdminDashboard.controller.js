@@ -1,8 +1,14 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/core/Fragment"
+], function (
+    Controller,
+    JSONModel,
+    MessageToast,
+    Fragment
+) {
     "use strict";
 
     return Controller.extend(
@@ -39,7 +45,8 @@ sap.ui.define([
                     );
                 }
 
-                const data = await response.json();
+                const data =
+                    await response.json();
 
                 this.getView().setModel(
                     new JSONModel(data),
@@ -59,7 +66,8 @@ sap.ui.define([
                     );
                 }
 
-                const data = await response.json();
+                const data =
+                    await response.json();
 
                 const records =
                     Array.isArray(data.value)
@@ -86,7 +94,8 @@ sap.ui.define([
                         );
                     }
 
-                    const data = await response.json();
+                    const data =
+                        await response.json();
 
                     const records =
                         Array.isArray(data.value)
@@ -104,7 +113,8 @@ sap.ui.define([
                 fileName,
                 mimeType
             ) {
-                const response = await fetch(endpoint);
+                const response =
+                    await fetch(endpoint);
 
                 if (!response.ok) {
                     throw new Error(
@@ -112,8 +122,11 @@ sap.ui.define([
                     );
                 }
 
-                const result = await response.json();
-                const binaryValue = result.value;
+                const result =
+                    await response.json();
+
+                const binaryValue =
+                    result.value;
 
                 let byteArray;
 
@@ -122,18 +135,20 @@ sap.ui.define([
                     binaryValue.type === "Buffer" &&
                     Array.isArray(binaryValue.data)
                 ) {
-                    byteArray = new Uint8Array(
-                        binaryValue.data
-                    );
+                    byteArray =
+                        new Uint8Array(
+                            binaryValue.data
+                        );
                 } else if (
                     typeof binaryValue === "string"
                 ) {
                     const binaryString =
                         atob(binaryValue);
 
-                    byteArray = new Uint8Array(
-                        binaryString.length
-                    );
+                    byteArray =
+                        new Uint8Array(
+                            binaryString.length
+                        );
 
                     for (
                         let index = 0;
@@ -164,8 +179,11 @@ sap.ui.define([
                 const downloadLink =
                     document.createElement("a");
 
-                downloadLink.href = downloadUrl;
-                downloadLink.download = fileName;
+                downloadLink.href =
+                    downloadUrl;
+
+                downloadLink.download =
+                    fileName;
 
                 document.body.appendChild(
                     downloadLink
@@ -177,7 +195,9 @@ sap.ui.define([
                     downloadLink
                 );
 
-                URL.revokeObjectURL(downloadUrl);
+                URL.revokeObjectURL(
+                    downloadUrl
+                );
             },
 
             onExportPdf: async function () {
@@ -229,6 +249,729 @@ sap.ui.define([
                 }
             },
 
+            onAddEmployee: async function () {
+                const view =
+                    this.getView();
+
+                if (!this._createEmployeeDialog) {
+                    this._createEmployeeDialog =
+                        await Fragment.load({
+                            id: view.getId(),
+
+                            name:
+                                "project1.ext.fragments." +
+                                "CreateEmployeeDialog",
+
+                            controller: this
+                        });
+
+                    view.addDependent(
+                        this._createEmployeeDialog
+                    );
+
+                    const cancelButton =
+                        Fragment.byId(
+                            view.getId(),
+                            "cancelCreateEmployeeButton"
+                        );
+
+                    cancelButton.attachPress(
+                        function () {
+                            const fullNameInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeNameInput"
+                                );
+
+                            const emailInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeEmailInput"
+                                );
+
+                            const phoneInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeePhoneInput"
+                                );
+
+                            const locationInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeLocationInput"
+                                );
+
+                            fullNameInput.setValue("");
+                            emailInput.setValue("");
+                            phoneInput.setValue("");
+                            locationInput.setValue("");
+
+                            fullNameInput.setValueState(
+                                "None"
+                            );
+
+                            emailInput.setValueState(
+                                "None"
+                            );
+
+                            locationInput.setValueState(
+                                "None"
+                            );
+
+                            this._createEmployeeDialog.close();
+                        }.bind(this)
+                    );
+
+                    const saveButton =
+                        Fragment.byId(
+                            view.getId(),
+                            "saveEmployeeButton"
+                        );
+
+                    saveButton.attachPress(
+                        async function () {
+                            const fullNameInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeNameInput"
+                                );
+
+                            const emailInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeEmailInput"
+                                );
+
+                            const phoneInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeePhoneInput"
+                                );
+
+                            const departmentSelect =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeDepartmentSelect"
+                                );
+
+                            const locationInput =
+                                Fragment.byId(
+                                    view.getId(),
+                                    "createEmployeeLocationInput"
+                                );
+
+                            const fullName =
+                                fullNameInput
+                                    .getValue()
+                                    .trim();
+
+                            const email =
+                                emailInput
+                                    .getValue()
+                                    .trim();
+
+                            const phone =
+                                phoneInput
+                                    .getValue()
+                                    .trim();
+
+                            const departmentID =
+                                departmentSelect
+                                    .getSelectedKey();
+
+                            const location =
+                                locationInput
+                                    .getValue()
+                                    .trim();
+
+                            fullNameInput.setValueState(
+                                fullName
+                                    ? "None"
+                                    : "Error"
+                            );
+
+                            emailInput.setValueState(
+                                email
+                                    ? "None"
+                                    : "Error"
+                            );
+
+                            locationInput.setValueState(
+                                location
+                                    ? "None"
+                                    : "Error"
+                            );
+
+                            if (
+                                !fullName ||
+                                !email ||
+                                !departmentID ||
+                                !location
+                            ) {
+                                MessageToast.show(
+                                    "Complete all required fields"
+                                );
+
+                                return;
+                            }
+
+                            saveButton.setEnabled(
+                                false
+                            );
+
+                            try {
+                                const response =
+                                    await fetch(
+                                        "/odata/v4/" +
+                                        "asset-management/" +
+                                        "CreateEmployee",
+                                        {
+                                            method: "POST",
+
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+
+                                                "Accept":
+                                                    "application/json"
+                                            },
+
+                                            credentials:
+                                                "include",
+
+                                            body:
+                                                JSON.stringify({
+                                                    fullName:
+                                                        fullName,
+
+                                                    email:
+                                                        email,
+
+                                                    phone:
+                                                        phone ||
+                                                        null,
+
+                                                    departmentID:
+                                                        departmentID,
+
+                                                    location:
+                                                        location
+                                                })
+                                        }
+                                    );
+
+                                if (!response.ok) {
+                                    const errorText =
+                                        await response.text();
+
+                                    let errorMessage =
+                                        "Unable to create employee";
+
+                                    try {
+                                        const errorResult =
+                                            JSON.parse(
+                                                errorText
+                                            );
+
+                                        if (
+                                            errorResult.error &&
+                                            errorResult.error.message
+                                        ) {
+                                            errorMessage =
+                                                errorResult
+                                                    .error
+                                                    .message;
+                                        }
+                                    } catch (
+                                        parseError
+                                    ) {
+                                        if (errorText) {
+                                            errorMessage =
+                                                errorText;
+                                        }
+                                    }
+
+                                    throw new Error(
+                                        errorMessage
+                                    );
+                                }
+
+                                await response.json();
+
+                                fullNameInput.setValue("");
+                                emailInput.setValue("");
+                                phoneInput.setValue("");
+                                locationInput.setValue("");
+
+                                fullNameInput.setValueState(
+                                    "None"
+                                );
+
+                                emailInput.setValueState(
+                                    "None"
+                                );
+
+                                locationInput.setValueState(
+                                    "None"
+                                );
+
+                                this._createEmployeeDialog.close();
+
+                                MessageToast.show(
+                                    fullName +
+                                    " created successfully"
+                                );
+                            } catch (error) {
+                                console.error(
+                                    "Employee creation failed:",
+                                    error
+                                );
+
+                                MessageToast.show(
+                                    error.message ||
+                                    "Unable to create employee"
+                                );
+                            } finally {
+                                saveButton.setEnabled(
+                                    true
+                                );
+                            }
+                        }.bind(this)
+                    );
+                }
+
+                this._createEmployeeDialog.open();
+            },
+
+            onAddVendor: async function () {
+                const view =
+                    this.getView();
+
+                if (!this._createVendorDialog) {
+                    this._createVendorDialog =
+                        await Fragment.load({
+                            id: view.getId(),
+
+                            name:
+                                "project1.ext.fragments." +
+                                "CreateVendorDialog",
+
+                            controller: this
+                        });
+
+                    view.addDependent(
+                        this._createVendorDialog
+                    );
+
+                    const nameInput =
+                        Fragment.byId(
+                            view.getId(),
+                            "createVendorNameInput"
+                        );
+
+                    const emailInput =
+                        Fragment.byId(
+                            view.getId(),
+                            "createVendorEmailInput"
+                        );
+
+                    const saveButton =
+                        Fragment.byId(
+                            view.getId(),
+                            "saveVendorButton"
+                        );
+
+                    const cancelButton =
+                        Fragment.byId(
+                            view.getId(),
+                            "cancelCreateVendorButton"
+                        );
+
+                    cancelButton.attachPress(
+                        function () {
+                            nameInput.setValue("");
+                            emailInput.setValue("");
+
+                            nameInput.setValueState(
+                                "None"
+                            );
+
+                            emailInput.setValueState(
+                                "None"
+                            );
+
+                            this._createVendorDialog.close();
+                        }.bind(this)
+                    );
+
+                    saveButton.attachPress(
+                        async function () {
+                            const vendorName =
+                                nameInput
+                                    .getValue()
+                                    .trim();
+
+                            const vendorEmail =
+                                emailInput
+                                    .getValue()
+                                    .trim();
+
+                            nameInput.setValueState(
+                                vendorName
+                                    ? "None"
+                                    : "Error"
+                            );
+
+                            emailInput.setValueState(
+                                vendorEmail
+                                    ? "None"
+                                    : "Error"
+                            );
+
+                            if (
+                                !vendorName ||
+                                !vendorEmail
+                            ) {
+                                MessageToast.show(
+                                    "Complete all required fields"
+                                );
+
+                                return;
+                            }
+
+                            const emailPattern =
+                                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                            if (
+                                !emailPattern.test(
+                                    vendorEmail
+                                )
+                            ) {
+                                emailInput.setValueState(
+                                    "Error"
+                                );
+
+                                MessageToast.show(
+                                    "Enter a valid vendor email address"
+                                );
+
+                                return;
+                            }
+
+                            saveButton.setEnabled(
+                                false
+                            );
+
+                            try {
+                                const response =
+                                    await fetch(
+                                        "/odata/v4/" +
+                                        "asset-management/" +
+                                        "CreateVendor",
+                                        {
+                                            method: "POST",
+
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+
+                                                "Accept":
+                                                    "application/json"
+                                            },
+
+                                            credentials:
+                                                "include",
+
+                                            body:
+                                                JSON.stringify({
+                                                    name:
+                                                        vendorName,
+
+                                                    email:
+                                                        vendorEmail
+                                                })
+                                        }
+                                    );
+
+                                if (!response.ok) {
+                                    const errorText =
+                                        await response.text();
+
+                                    let errorMessage =
+                                        "Unable to create vendor";
+
+                                    try {
+                                        const errorResult =
+                                            JSON.parse(
+                                                errorText
+                                            );
+
+                                        if (
+                                            errorResult.error &&
+                                            errorResult.error.message
+                                        ) {
+                                            errorMessage =
+                                                errorResult
+                                                    .error
+                                                    .message;
+                                        }
+                                    } catch (
+                                        parseError
+                                    ) {
+                                        if (errorText) {
+                                            errorMessage =
+                                                errorText;
+                                        }
+                                    }
+
+                                    throw new Error(
+                                        errorMessage
+                                    );
+                                }
+
+                                await response.json();
+
+                                nameInput.setValue("");
+                                emailInput.setValue("");
+
+                                nameInput.setValueState(
+                                    "None"
+                                );
+
+                                emailInput.setValueState(
+                                    "None"
+                                );
+
+                                this._createVendorDialog.close();
+
+                                MessageToast.show(
+                                    vendorName +
+                                    " created successfully"
+                                );
+                            } catch (error) {
+                                console.error(
+                                    "Vendor creation failed:",
+                                    error
+                                );
+
+                                MessageToast.show(
+                                    error.message ||
+                                    "Unable to create vendor"
+                                );
+                            } finally {
+                                saveButton.setEnabled(
+                                    true
+                                );
+                            }
+                        }.bind(this)
+                    );
+                }
+
+                this._createVendorDialog.open();
+            },
+
+            onAddDepartment: async function () {
+    const view =
+        this.getView();
+
+    if (!this._createDepartmentDialog) {
+        this._createDepartmentDialog =
+            await Fragment.load({
+                id: view.getId(),
+
+                name:
+                    "project1.ext.fragments." +
+                    "CreateDepartmentDialog",
+
+                controller: this
+            });
+
+        view.addDependent(
+            this._createDepartmentDialog
+        );
+
+        const nameInput =
+            Fragment.byId(
+                view.getId(),
+                "createDepartmentNameInput"
+            );
+
+        const costCenterInput =
+            Fragment.byId(
+                view.getId(),
+                "createDepartmentCostCenterInput"
+            );
+
+        const saveButton =
+            Fragment.byId(
+                view.getId(),
+                "saveDepartmentButton"
+            );
+
+        const cancelButton =
+            Fragment.byId(
+                view.getId(),
+                "cancelCreateDepartmentButton"
+            );
+
+        cancelButton.attachPress(
+            function () {
+                nameInput.setValue("");
+                costCenterInput.setValue("");
+
+                nameInput.setValueState(
+                    "None"
+                );
+
+                costCenterInput.setValueState(
+                    "None"
+                );
+
+                this._createDepartmentDialog.close();
+            }.bind(this)
+        );
+
+        saveButton.attachPress(
+            async function () {
+                const departmentName =
+                    nameInput
+                        .getValue()
+                        .trim();
+
+                const costCenter =
+                    costCenterInput
+                        .getValue()
+                        .trim()
+                        .toUpperCase();
+
+                nameInput.setValueState(
+                    departmentName
+                        ? "None"
+                        : "Error"
+                );
+
+                costCenterInput.setValueState(
+                    costCenter
+                        ? "None"
+                        : "Error"
+                );
+
+                if (
+                    !departmentName ||
+                    !costCenter
+                ) {
+                    MessageToast.show(
+                        "Complete all required fields"
+                    );
+
+                    return;
+                }
+
+                saveButton.setEnabled(false);
+
+                try {
+                    const response =
+                        await fetch(
+                            "/odata/v4/" +
+                            "asset-management/" +
+                            "CreateDepartment",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "Accept":
+                                        "application/json"
+                                },
+
+                                credentials:
+                                    "include",
+
+                                body:
+                                    JSON.stringify({
+                                        name:
+                                            departmentName,
+
+                                        costCenter:
+                                            costCenter
+                                    })
+                            }
+                        );
+
+                    if (!response.ok) {
+                        const errorText =
+                            await response.text();
+
+                        let errorMessage =
+                            "Unable to create department";
+
+                        try {
+                            const errorResult =
+                                JSON.parse(
+                                    errorText
+                                );
+
+                            if (
+                                errorResult.error &&
+                                errorResult.error.message
+                            ) {
+                                errorMessage =
+                                    errorResult
+                                        .error
+                                        .message;
+                            }
+                        } catch (parseError) {
+                            if (errorText) {
+                                errorMessage =
+                                    errorText;
+                            }
+                        }
+
+                        throw new Error(
+                            errorMessage
+                        );
+                    }
+
+                    await response.json();
+
+                    nameInput.setValue("");
+                    costCenterInput.setValue("");
+
+                    nameInput.setValueState(
+                        "None"
+                    );
+
+                    costCenterInput.setValueState(
+                        "None"
+                    );
+
+                    this._createDepartmentDialog.close();
+
+                    MessageToast.show(
+                        departmentName +
+                        " created successfully"
+                    );
+                } catch (error) {
+                    console.error(
+                        "Department creation failed:",
+                        error
+                    );
+
+                    MessageToast.show(
+                        error.message ||
+                        "Unable to create department"
+                    );
+                } finally {
+                    saveButton.setEnabled(true);
+                }
+            }.bind(this)
+        );
+    }
+
+    this._createDepartmentDialog.open();
+},
             onTotalAssetsPress: function () {
                 this.getOwnerComponent()
                     .getRouter()
@@ -251,6 +994,7 @@ sap.ui.define([
                             "?query": {
                                 statusFilter:
                                     "AVAILABLE",
+
                                 sourceRole:
                                     "admin"
                             }
@@ -267,6 +1011,7 @@ sap.ui.define([
                             "?query": {
                                 statusFilter:
                                     "ASSIGNED",
+
                                 sourceRole:
                                     "admin"
                             }
@@ -283,6 +1028,7 @@ sap.ui.define([
                             "?query": {
                                 statusFilter:
                                     "MAINTENANCE",
+
                                 sourceRole:
                                     "admin"
                             }
@@ -299,6 +1045,7 @@ sap.ui.define([
                             "?query": {
                                 statusFilter:
                                     "RETIRED",
+
                                 sourceRole:
                                     "admin"
                             }
@@ -315,6 +1062,7 @@ sap.ui.define([
                             "?query": {
                                 statusFilter:
                                     "ARCHIVED",
+
                                 sourceRole:
                                     "admin"
                             }
@@ -333,6 +1081,7 @@ sap.ui.define([
                                 "?query": {
                                     warrantyFilter:
                                         "expiring",
+
                                     sourceRole:
                                         "admin"
                                 }

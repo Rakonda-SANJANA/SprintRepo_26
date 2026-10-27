@@ -1,28 +1,81 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
-], function (Controller) {
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast"
+], function (
+    Controller,
+    MessageToast
+) {
     "use strict";
 
     return Controller.extend(
         "project1.ext.landing.Landing",
         {
-            onOpenAdminDashboard: function () {
-                this.getOwnerComponent()
-                    .getRouter()
-                    .navTo("AdminDashboard");
-            },
+            _selectRoleAndNavigate:
+                async function (
+                    selectedRole,
+                    routeName
+                ) {
+                    document.cookie =
+                        "assetManagementRole=" +
+                        encodeURIComponent(
+                            selectedRole
+                        ) +
+                        "; path=/; SameSite=Lax";
 
-            onOpenManagerDashboard: function () {
-                this.getOwnerComponent()
-                    .getRouter()
-                    .navTo("ManagerDashboard");
-            },
+                    const component =
+                        this.getOwnerComponent();
 
-            onOpenEmployeeDashboard: function () {
-                this.getOwnerComponent()
-                    .getRouter()
-                    .navTo("EmployeeDashboard");
-            }
+                    try {
+                        if (
+                            typeof component
+                                ._loadCurrentUser ===
+                            "function"
+                        ) {
+                            await component
+                                ._loadCurrentUser();
+                        }
+
+                        component
+                            .getRouter()
+                            .navTo(routeName);
+                    } catch (error) {
+                        console.error(
+                            "Role selection failed:",
+                            error
+                        );
+
+                        MessageToast.show(
+                            "Unable to switch role"
+                        );
+                    }
+                },
+
+            onOpenAdminDashboard:
+                function () {
+                    return this
+                        ._selectRoleAndNavigate(
+                            "admin",
+                            "AdminDashboard"
+                        );
+                },
+
+            onOpenManagerDashboard:
+                function () {
+                    return this
+                        ._selectRoleAndNavigate(
+                            "manager",
+                            "ManagerDashboard"
+                        );
+                },
+
+            onOpenEmployeeDashboard:
+                function () {
+                    return this
+                        ._selectRoleAndNavigate(
+                            "employee",
+                            "EmployeeDashboard"
+                        );
+                }
         }
     );
 });
