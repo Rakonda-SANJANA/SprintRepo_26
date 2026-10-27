@@ -1,0 +1,64 @@
+<mvc:View
+    controllerName="project1.ext.landing.Landing"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page
+        id="landingPage"
+        title="Asset Management">
+
+        <content>
+
+            <VBox
+                id="landingVBox"
+                alignItems="Center"
+                justifyContent="Center"
+                height="100%">
+
+                <Title
+                    id="landingTitle"
+                    text="Asset Management System"
+                    level="H1"
+                    class="sapUiMediumMarginBottom" />
+
+                <Text
+                    id="landingDescription"
+                    text="Select a dashboard to continue"
+                    class="sapUiMediumMarginBottom" />
+
+                <HBox
+                    id="landingRoleButtons"
+                    wrap="Wrap"
+                    justifyContent="Center">
+
+                    <Button
+                        id="openAdminDashboardButton"
+                        text="Admin"
+                        icon="sap-icon://shield"
+                        type="Emphasized"
+                        class="sapUiSmallMargin"
+                        press=".onOpenAdminDashboard" />
+
+                    <Button
+                        id="openManagerDashboardButton"
+                        text="Manager"
+                        icon="sap-icon://manager"
+                        class="sapUiSmallMargin"
+                        press=".onOpenManagerDashboard" />
+
+                    <Button
+                        id="openEmployeeDashboardButton"
+                        text="Employee"
+                        icon="sap-icon://employee"
+                        class="sapUiSmallMargin"
+                        press=".onOpenEmployeeDashboard" />
+
+                </HBox>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

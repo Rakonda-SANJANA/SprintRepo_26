@@ -1,0 +1,401 @@
+<mvc:View
+    controllerName="project1.ext.dashboard.AdminDashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <Page
+    id="roleAdminDashboardPage"
+    title="Admin Dashboard">
+
+    <customHeader>
+
+        <Bar id="adminDashboardHeaderBar">
+
+            <contentLeft>
+
+                <Button
+                    id="adminDashboardBackButton"
+                    icon="sap-icon://nav-back"
+                    type="Transparent"
+                    tooltip="Back to Assets"
+                    press=".onNavBack" />
+
+            </contentLeft>
+
+            <contentMiddle>
+
+                <Title
+                    id="adminDashboardHeaderTitle"
+                    text="Admin Dashboard" />
+
+            </contentMiddle>
+
+        </Bar>
+
+    </customHeader>
+
+    <content>
+
+            <VBox
+                id="adminDashboardVBox"
+                class="sapUiMediumMargin">
+
+                <!-- Report Export Buttons -->
+
+                <Toolbar
+                    id="adminReportToolbar"
+                    class="sapUiSmallMarginBottom">
+
+                    <Title
+                        id="adminReportToolbarTitle"
+                        text="Report Exports"
+                        level="H3" />
+
+                    <ToolbarSpacer
+                        id="adminReportToolbarSpacer" />
+
+                    <Button
+                        id="adminExportPdfButton"
+                        text="Export Asset PDF"
+                        icon="sap-icon://pdf-attachment"
+                        type="Emphasized"
+                        press=".onExportPdf" />
+
+                    <Button
+                        id="adminExportExcelButton"
+                        text="Export Asset Excel"
+                        icon="sap-icon://excel-attachment"
+                        press=".onExportExcel" />
+
+                </Toolbar>
+
+                <!-- Admin KPI Cards -->
+
+                <Title
+                    id="adminKpiTitle"
+                    text="Asset Management KPIs"
+                    level="H2" />
+
+                <HBox
+                    id="adminKpiHBox"
+                    wrap="Wrap"
+                    justifyContent="SpaceBetween">
+
+                    <!-- Total Assets -->
+
+                    <GenericTile
+                        id="adminTotalAssetsTile"
+                        header="Total Assets"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onTotalAssetsPress">
+
+                        <TileContent
+                            id="adminTotalAssetsContent">
+
+                            <NumericContent
+                                id="adminTotalAssetsNumber"
+                                value="{admin>/totalAssets}" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Available Assets -->
+
+                    <GenericTile
+                        id="adminAvailableAssetsTile"
+                        header="Available Assets"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onAvailableAssetsPress">
+
+                        <TileContent
+                            id="adminAvailableAssetsContent">
+
+                            <NumericContent
+                                id="adminAvailableAssetsNumber"
+                                value="{admin>/availableAssets}"
+                                valueColor="Good" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Assigned Assets -->
+
+                    <GenericTile
+                        id="adminAssignedAssetsTile"
+                        header="Assigned Assets"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onAssignedAssetsPress">
+
+                        <TileContent
+                            id="adminAssignedAssetsContent">
+
+                            <NumericContent
+                                id="adminAssignedAssetsNumber"
+                                value="{admin>/assignedAssets}"
+                                valueColor="Neutral" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Maintenance Assets -->
+
+                    <GenericTile
+                        id="adminMaintenanceAssetsTile"
+                        header="Maintenance Assets"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onMaintenanceAssetsPress">
+
+                        <TileContent
+                            id="adminMaintenanceAssetsContent">
+
+                            <NumericContent
+                                id="adminMaintenanceAssetsNumber"
+                                value="{admin>/maintenanceAssets}"
+                                valueColor="Critical" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Retired Assets -->
+
+                    <GenericTile
+                        id="adminRetiredAssetsTile"
+                        header="Retired Assets"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onRetiredAssetsPress">
+
+                        <TileContent
+                            id="adminRetiredAssetsContent">
+
+                            <NumericContent
+                                id="adminRetiredAssetsNumber"
+                                value="{admin>/retiredAssets}"
+                                valueColor="Neutral" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Archived Assets -->
+
+                    <GenericTile
+                        id="adminArchivedAssetsTile"
+                        header="Archived Assets"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onArchivedAssetsPress">
+
+                        <TileContent
+                            id="adminArchivedAssetsContent">
+
+                            <NumericContent
+                                id="adminArchivedAssetsNumber"
+                                value="{admin>/archivedAssets}"
+                                valueColor="Error" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Expiring Warranties -->
+
+                    <GenericTile
+                        id="adminExpiringWarrantiesTile"
+                        header="Expiring Warranties"
+                        frameType="OneByHalf"
+                        class="sapUiTinyMargin"
+                        press=".onExpiringWarrantiesPress">
+
+                        <TileContent
+                            id="adminExpiringWarrantiesContent">
+
+                            <NumericContent
+                                id="adminExpiringWarrantiesNumber"
+                                value="{admin>/expiringWarranties}"
+                                valueColor="Critical"
+                                icon="sap-icon://alert" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Asset Status Donut Chart -->
+
+                <Title
+                    id="adminAssetStatusTitle"
+                    text="Asset Status Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="adminAssetStatusChart"
+                    vizType="donut"
+                    width="100%"
+                    height="300px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": true
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": false
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            id="adminAssetStatusDataset"
+                            data="{assetChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    id="adminAssetStatusDimension"
+                                    name="Status"
+                                    value="{assetChart>status}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    id="adminAssetStatusMeasure"
+                                    name="Count"
+                                    value="{assetChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            id="adminAssetStatusSizeFeed"
+                            uid="size"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            id="adminAssetStatusColorFeed"
+                            uid="color"
+                            type="Dimension"
+                            values="Status" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+                <!-- Archive Reason Column Chart -->
+
+                <Title
+                    id="adminArchiveReasonTitle"
+                    text="Archive Reason Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="adminArchiveReasonChart"
+                    vizType="column"
+                    width="100%"
+                    height="300px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": false
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": true,
+                                "position": "outside"
+                            }
+                        },
+                        "valueAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Number of Archived Assets"
+                            }
+                        },
+                        "categoryAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Archive Reason"
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            id="adminArchiveReasonDataset"
+                            data="{archiveChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    id="adminArchiveReasonDimension"
+                                    name="Reason"
+                                    value="{archiveChart>reason}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    id="adminArchiveReasonMeasure"
+                                    name="Count"
+                                    value="{archiveChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            id="adminArchiveReasonValueFeed"
+                            uid="valueAxis"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            id="adminArchiveReasonCategoryFeed"
+                            uid="categoryAxis"
+                            type="Dimension"
+                            values="Reason" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

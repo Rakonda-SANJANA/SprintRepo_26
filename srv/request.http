@@ -1,0 +1,535 @@
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.AssignAsset
+Content-Type: application/json
+
+{
+    "employeeID": "11111111-1111-1111-1111-111111111111",
+    "distributionDate": "2026-10-21"
+}
+
+###
+http://localhost:4004/odata/v4/asset-management/Assets
+
+
+###
+http://localhost:4004/odata/v4/asset-management/AssetAssignments
+
+
+###
+http://localhost:4004/odata/v4/asset-management/OwnershipLedgers
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.TransferAsset
+Content-Type: application/json
+
+{
+  "employeeID": "22222222-2222-2222-2222-222222222222",
+  "transferDate": "2026-10-21"
+}
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.ReturnAsset
+Content-Type: application/json
+
+{
+  "returnDate": "2026-10-21",
+  "remarks": "Returned after project completion"
+}
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.SendForMaintenance
+Content-Type: application/json
+
+{
+  "maintenanceType": "REPAIR"
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/MaintenanceRecords
+
+###
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.CompleteMaintenance
+Content-Type: application/json
+
+{}
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.RetireAsset
+Content-Type: application/json
+
+{
+  "reason": "End of Life"
+}
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.ArchiveAsset
+Content-Type: application/json
+
+{
+  "reason": "END_OF_LIFE"
+}
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ArchiveRecords
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAdminDashboard()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetManagerDashboard()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetEmployeeDashboard()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssetStatusChart()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentChart()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceStatusChart()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetArchiveReasonChart()
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssetReport()
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetArchiveReport()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ExportAssetReportPDF()
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ExportAssetReportExcel()
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')
+Content-Type: application/json
+
+{
+  "warrantyExpiry": "2027-01-01"
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')?$select=assetTag,warrantyExpiry,warrantyStatus
+
+###
+GET http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')?$select=warrantyStatus
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.ArchiveAsset
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "reason": "END_OF_LIFE"
+}
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.ArchiveAsset
+Authorization: Basic manager manager
+Content-Type: application/json
+
+{
+  "reason": "END_OF_LIFE"
+}
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.AssignAsset
+Authorization: Basic employee employee
+Content-Type: application/json
+
+{
+  "employeeID": "11111111-1111-1111-1111-111111111111",
+  "distributionDate": "2026-10-22"
+}
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.AssignAsset
+Authorization: Basic manager manager
+Content-Type: application/json
+
+{
+  "employeeID": "11111111-1111-1111-1111-111111111111",
+  "distributionDate": "2026-10-22"
+}
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.SendForMaintenance
+Authorization: Basic employee employee
+Content-Type: application/json
+
+{
+  "maintenanceType": "REPAIR"
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAdminDashboard()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetEmployeeDashboard()
+Authorization: Basic employee employee
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetEmployeeDashboard()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetEmployeeDashboard()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetManagerDashboard()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentChart()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentChart()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentChart()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceStatusChart()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceStatusChart()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceStatusChart()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/AssetAssignments?$filter=employee_ID eq 11111111-1111-1111-1111-111111111111&$select=asset_ID,employee_ID,assignmentStatus
+Authorization: Basic employee employee
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssetStatusChart()
+Authorization: Basic manager manager
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssetStatusChart()
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssetReport()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssetReport()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+Authorization: Basic employee employee
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetArchiveReport()
+Authorization: Basic manager manager
+###
+GET http://localhost:4004/odata/v4/asset-management/ExportAssetReportPDF()
+Authorization: Basic manager manager
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ExportAssetReportExcel()
+Authorization: Basic manager manager
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ExportAssetReportExcel()
+Authorization: Basic admin admin
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic employee employee
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic manager manager
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic manager manager
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic admin admin
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('22222222-2222-2222-2222-222222222222')/AssetManagementService.SendForMaintenance
+Authorization: Basic employee employee
+Content-Type: application/json
+
+{
+  "maintenanceType": "REPAIR",
+  "cost": -500
+}
+
+
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('22222222-2222-2222-2222-222222222222')/AssetManagementService.SendForMaintenance
+Authorization: Basic employee employee
+Content-Type: application/json
+
+{
+  "maintenanceType": "REPAIR",
+  "cost": 1500
+}
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/MaintenanceRecords?$select=ID,asset_ID,type,status,cost
+Authorization: Basic admin admin
+
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/MaintenanceRecords('52915276-320a-4446-b017-a94e35270090')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "cost": 1500.00
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic admin admin
+
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/MaintenanceRecords('52915276-320a-4446-b017-a94e35270090')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "coveredByWarranty": true
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic admin admin
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/MaintenanceRecords('52915276-320a-4446-b017-a94e35270090')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "serviceVendor_ID": "11111111-1111-1111-1111-111111111111"
+}
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('22222222-2222-2222-2222-222222222222')/AssetManagementService.SendForMaintenance
+Authorization: Basic employee employee
+Content-Type: application/json
+
+{
+  "maintenanceType": "REPAIR",
+  "description": "Preventive maintenance test",
+  "serviceVendorID": "11111111-1111-1111-1111-111111111111",
+  "cost": 500,
+  "coveredByWarranty": true,
+  "nextDueDate": "2026-10-21"
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic admin admin
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/MaintenanceRecords('52915276-320a-4446-b017-a94e35270090')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "nextDueDate": "2027-04-21"
+}
+
+###
+POST http://localhost:4004/odata/v4/asset-management/Assets('11111111-1111-1111-1111-111111111111')/AssetManagementService.ArchiveAsset
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "reason": "END_OF_LIFE",
+  "disposalMethod": "RECYCLE",
+  "disposalCertNo": ""
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetArchiveReport()
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ArchiveRecords?$select=ID,asset_ID,reason,disposalMethod,disposalCertNo
+Authorization: Basic admin admin
+
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/ArchiveRecords('7aa3c62e-e3ec-47b5-80ba-f88d3a2e0113')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "disposalMethod": "RECYCLE",
+  "disposalCertNo": "CERT-2026-001"
+}
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetArchiveReport()
+Authorization: Basic admin admin
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+Authorization: Basic admin admin
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceReport()
+Authorization: Basic admin admin
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/MaintenanceRecords('52915276-320a-4446-b017-a94e35270090')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "reportedBy_ID": "33333333-3333-3333-3333-333333333333"
+}
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/OwnershipLedgers?$select=ID,asset_ID,action,recordedBy_ID
+Authorization: Basic admin admin
+
+###
+PATCH http://localhost:4004/odata/v4/asset-management/OwnershipLedgers('1e1e42f3-23e4-4488-b38a-7b4c490c20b2')
+Authorization: Basic admin admin
+Content-Type: application/json
+
+{
+  "recordedBy_ID": "33333333-3333-3333-3333-333333333333"
+}
+
+###
+GET http://localhost:4004/odata/v4/asset-management/AssetAssignments?$select=ID,asset_ID,employee_ID,assignedBy_ID,assignmentStatus
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetMaintenanceStatusChart()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/ExportAssetReportPDF()
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAdminDashboard()
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetTransferReport()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+Authorization: Basic employee employee
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+Authorization: Basic employee employee
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetAssignmentReport()
+Authorization: Basic employee employee
+
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetCurrentUser()
+Authorization: Basic admin admin
+
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetCurrentUser()
+Authorization: Basic manager manager
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetCurrentUser()
+Authorization: Basic employee employee
+
+###
+GET http://localhost:4004/odata/v4/asset-management/GetArchiveReport()
+Authorization: Basic admin admin

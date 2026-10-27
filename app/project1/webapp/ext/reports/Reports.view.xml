@@ -1,0 +1,835 @@
+<mvc:View
+    controllerName="project1.ext.reports.Reports"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page
+        id="reportsPage"
+        title="Asset Management Reports">
+
+        <customHeader>
+
+            <Bar id="reportsHeaderBar">
+
+                <contentLeft>
+
+                    <Button
+                        id="reportsBackButton"
+                        icon="sap-icon://nav-back"
+                        type="Transparent"
+                        press=".onNavBack"
+                        tooltip="Back to Assets" />
+
+                </contentLeft>
+
+                <contentMiddle>
+
+                    <Title
+                        id="reportsPageTitle"
+                        text="Asset Management Reports" />
+
+                </contentMiddle>
+
+                <contentRight>
+
+                    <Button
+                        id="refreshReportsButton"
+                        text="Refresh"
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        press=".onRefreshReports" />
+
+                </contentRight>
+
+            </Bar>
+
+        </customHeader>
+
+        <content>
+
+            <VBox
+                id="reportsVBox"
+                class="sapUiMediumMargin">
+
+                <MessageStrip
+                    id="reportsInfoStrip"
+                    text="View the latest asset, assignment, maintenance, and archive reports."
+                    type="Information"
+                    showIcon="true"
+                    showCloseButton="false"
+                    class="sapUiSmallMarginBottom" />
+
+                <IconTabBar
+                    id="reportsIconTabBar"
+                    expandable="false"
+                    selectedKey="assets"
+                    headerMode="Inline"
+                    class="sapUiResponsiveContentPadding">
+
+                    <items>
+
+                        <!-- Asset Report -->
+
+                        <IconTabFilter
+                            id="assetReportTab"
+                            key="assets"
+                            text="Asset Report"
+                            icon="sap-icon://product">
+
+                            <VBox
+                                id="assetReportVBox"
+                                class="sapUiSmallMarginTop">
+
+                                <Title
+                                    id="assetReportTitle"
+                                    text="Asset Report"
+                                    level="H2"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Table
+                                    id="assetReportTable"
+                                    items="{assetReport>/}"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    noDataText="No asset report records found">
+
+                                    <headerToolbar>
+
+                                        <OverflowToolbar
+                                            id="assetReportToolbar">
+
+                                            <Title
+                                                id="assetReportTableTitle"
+                                                text="Assets"
+                                                level="H3" />
+
+                                            <ToolbarSpacer
+                                                id="assetReportToolbarSpacer" />
+
+                                            <ObjectStatus
+                                                id="assetReportRecordCount"
+                                                text="Records: {= ${assetReport>/}.length }"
+                                                state="Information" />
+
+                                        </OverflowToolbar>
+
+                                    </headerToolbar>
+
+                                    <columns>
+
+                                        <Column id="assetTagColumn">
+                                            <Text
+                                                id="assetTagColumnText"
+                                                text="Asset Tag" />
+                                        </Column>
+
+                                        <Column id="serialNumberColumn">
+                                            <Text
+                                                id="serialNumberColumnText"
+                                                text="Serial Number" />
+                                        </Column>
+
+                                        <Column id="modelColumn">
+                                            <Text
+                                                id="modelColumnText"
+                                                text="Model" />
+                                        </Column>
+
+                                        <Column id="assetStatusColumn">
+                                            <Text
+                                                id="assetStatusColumnText"
+                                                text="Status" />
+                                        </Column>
+
+                                    </columns>
+
+                                    <items>
+
+                                        <ColumnListItem
+                                            id="assetReportRow"
+                                            type="Inactive">
+
+                                            <cells>
+
+                                                <ObjectIdentifier
+                                                    id="assetReportAssetTag"
+                                                    title="{assetReport>assetTag}" />
+
+                                                <Text
+                                                    id="assetReportSerialNumber"
+                                                    text="{assetReport>serialNumber}" />
+
+                                                <Text
+                                                    id="assetReportModel"
+                                                    text="{assetReport>model}" />
+
+                                                <ObjectStatus
+                                                    id="assetReportStatus"
+                                                    text="{assetReport>status}"
+                                                    state="{
+                                                        path: 'assetReport>status',
+                                                        formatter: '.formatAssetState'
+                                                    }" />
+
+                                            </cells>
+
+                                        </ColumnListItem>
+
+                                    </items>
+
+                                </Table>
+
+                            </VBox>
+
+                        </IconTabFilter>
+
+                        <!-- Assignment Report -->
+
+                        <IconTabFilter
+                            id="assignmentReportTab"
+                            key="assignments"
+                            text="Assignment Report"
+                            icon="sap-icon://employee">
+
+                            <VBox
+                                id="assignmentReportVBox"
+                                class="sapUiSmallMarginTop">
+
+                                <Title
+                                    id="assignmentReportTitle"
+                                    text="Assignment Report"
+                                    level="H2"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Table
+                                    id="assignmentReportTable"
+                                    items="{assignmentReport>/}"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    noDataText="No assignment report records found">
+
+                                    <headerToolbar>
+
+                                        <OverflowToolbar
+                                            id="assignmentReportToolbar">
+
+                                            <Title
+                                                id="assignmentReportTableTitle"
+                                                text="Assignments"
+                                                level="H3" />
+
+                                            <ToolbarSpacer
+                                                id="assignmentReportToolbarSpacer" />
+
+                                            <ObjectStatus
+                                                id="assignmentReportRecordCount"
+                                                text="Records: {= ${assignmentReport>/}.length }"
+                                                state="Information" />
+
+                                        </OverflowToolbar>
+
+                                    </headerToolbar>
+
+                                    <columns>
+
+                                        <Column id="assignmentEmployeeColumn">
+                                            <Text
+                                                id="assignmentEmployeeColumnText"
+                                                text="Employee Name" />
+                                        </Column>
+                                        <Column id="assignedByColumn">
+    <Text
+        id="assignedByColumnText"
+        text="Assigned By" />
+</Column>
+
+                                        <Column id="assignedDateColumn">
+                                            <Text
+                                                id="assignedDateColumnText"
+                                                text="Assigned Date" />
+                                        </Column>
+
+                                        <Column id="actualReturnDateColumn">
+                                            <Text
+                                                id="actualReturnDateColumnText"
+                                                text="Actual Return Date" />
+                                        </Column>
+
+                                        <Column id="assignmentStatusColumn">
+                                            <Text
+                                                id="assignmentStatusColumnText"
+                                                text="Assignment Status" />
+                                        </Column>
+
+                                    </columns>
+
+                                    <items>
+
+                                        <ColumnListItem
+                                            id="assignmentReportRow"
+                                            type="Inactive">
+
+                                            <cells>
+
+                                                <ObjectIdentifier
+                                                    id="assignmentEmployeeName"
+                                                    title="{assignmentReport>employeeName}"
+                                                    text="{assignmentReport>employeeID}" />
+                                                    <Text
+    id="assignmentAssignedBy"
+    text="{
+        path: 'assignmentReport>assignedByName',
+        formatter: '.formatEmptyValue'
+    }" />
+
+                                                <Text
+                                                    id="assignmentAssignedDate"
+                                                    text="{
+                                                        path: 'assignmentReport>assignedDate',
+                                                        formatter: '.formatDate'
+                                                    }" />
+
+                                                <Text
+                                                    id="assignmentActualReturnDate"
+                                                    text="{
+                                                        path: 'assignmentReport>actualReturnDate',
+                                                        formatter: '.formatDate'
+                                                    }" />
+
+                                                <ObjectStatus
+                                                    id="assignmentReportStatus"
+                                                    text="{assignmentReport>assignmentStatus}"
+                                                    state="{
+                                                        path: 'assignmentReport>assignmentStatus',
+                                                        formatter: '.formatAssignmentState'
+                                                    }" />
+
+                                            </cells>
+
+                                        </ColumnListItem>
+
+                                    </items>
+
+                                </Table>
+
+                            </VBox>
+
+                        </IconTabFilter>
+
+
+                        <!-- Transfer Report -->
+
+<IconTabFilter
+    id="transferReportTab"
+    key="transfers"
+    text="Transfer Report"
+    icon="sap-icon://journey-change">
+
+    <VBox
+        id="transferReportVBox"
+        class="sapUiSmallMarginTop">
+
+        <Title
+            id="transferReportTitle"
+            text="Transfer Report"
+            level="H2"
+            class="sapUiSmallMarginBottom" />
+
+        <Table
+            id="transferReportTable"
+            items="{transferReport>/}"
+            growing="true"
+            growingThreshold="20"
+            noDataText="No transfer report records found">
+
+            <headerToolbar>
+
+                <OverflowToolbar
+                    id="transferReportToolbar">
+
+                    <Title
+                        id="transferReportTableTitle"
+                        text="Transfers"
+                        level="H3" />
+
+                    <ToolbarSpacer
+                        id="transferReportToolbarSpacer" />
+
+                    <ObjectStatus
+                        id="transferReportRecordCount"
+                        text="Records: {= ${transferReport>/}.length }"
+                        state="Information" />
+
+                </OverflowToolbar>
+
+            </headerToolbar>
+
+            <columns>
+
+                <Column id="transferAssetTagColumn">
+                    <Text
+                        id="transferAssetTagColumnText"
+                        text="Asset Tag" />
+                </Column>
+
+                <Column id="transferFromEmployeeColumn">
+                    <Text
+                        id="transferFromEmployeeColumnText"
+                        text="From Employee" />
+                </Column>
+
+                <Column id="transferToEmployeeColumn">
+                    <Text
+                        id="transferToEmployeeColumnText"
+                        text="To Employee" />
+                </Column>
+
+                <Column id="transferDateColumn">
+                    <Text
+                        id="transferDateColumnText"
+                        text="Transfer Date" />
+                </Column>
+
+                <Column id="transferRecordedByColumn">
+                    <Text
+                        id="transferRecordedByColumnText"
+                        text="Recorded By" />
+                </Column>
+
+                <Column id="transferNotesColumn">
+                    <Text
+                        id="transferNotesColumnText"
+                        text="Notes" />
+                </Column>
+
+            </columns>
+
+            <items>
+
+                <ColumnListItem
+                    id="transferReportRow"
+                    type="Inactive">
+
+                    <cells>
+
+                        <ObjectIdentifier
+                            id="transferReportAssetTag"
+                            title="{transferReport>assetTag}"
+                            text="{transferReport>assetID}" />
+
+                        <Text
+                            id="transferReportFromEmployee"
+                            text="{
+                                path: 'transferReport>fromEmployeeName',
+                                formatter: '.formatEmptyValue'
+                            }" />
+
+                        <Text
+                            id="transferReportToEmployee"
+                            text="{
+                                path: 'transferReport>toEmployeeName',
+                                formatter: '.formatEmptyValue'
+                            }" />
+
+                        <Text
+                            id="transferReportDate"
+                            text="{
+                                path: 'transferReport>transitionDate',
+                                formatter: '.formatDate'
+                            }" />
+
+                        <Text
+                            id="transferReportRecordedBy"
+                            text="{
+                                path: 'transferReport>recordedByName',
+                                formatter: '.formatEmptyValue'
+                            }" />
+
+                        <Text
+                            id="transferReportNotes"
+                            text="{
+                                path: 'transferReport>notes',
+                                formatter: '.formatEmptyValue'
+                            }" />
+
+                    </cells>
+
+                </ColumnListItem>
+
+            </items>
+
+        </Table>
+
+    </VBox>
+
+</IconTabFilter>
+
+                        <!-- Maintenance Report -->
+
+                        <IconTabFilter
+                            id="maintenanceReportTab"
+                            key="maintenance"
+                            text="Maintenance Report"
+                            icon="sap-icon://wrench">
+
+                            <VBox
+                                id="maintenanceReportVBox"
+                                class="sapUiSmallMarginTop">
+
+                                <Title
+                                    id="maintenanceReportTitle"
+                                    text="Maintenance Report"
+                                    level="H2"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Table
+                                    id="maintenanceReportTable"
+                                    items="{maintenanceReport>/}"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    noDataText="No maintenance report records found">
+
+                                    <headerToolbar>
+
+                                        <OverflowToolbar
+                                            id="maintenanceReportToolbar">
+
+                                            <Title
+                                                id="maintenanceReportTableTitle"
+                                                text="Maintenance Records"
+                                                level="H3" />
+
+                                            <ToolbarSpacer
+                                                id="maintenanceReportToolbarSpacer" />
+
+                                            <ObjectStatus
+                                                id="maintenanceReportRecordCount"
+                                                text="Records: {= ${maintenanceReport>/}.length }"
+                                                state="Information" />
+
+                                        </OverflowToolbar>
+
+                                    </headerToolbar>
+
+                                    <columns>
+
+                                        <Column id="maintenanceTypeColumn">
+                                            <Text
+                                                id="maintenanceTypeColumnText"
+                                                text="Type" />
+                                        </Column>
+                                        <Column
+    id="maintenanceDescriptionColumn"
+    width="18rem">
+    <Text
+        id="maintenanceDescriptionColumnText"
+        text="Description" />
+</Column>
+<Column
+    id="maintenanceReportedByColumn"
+    width="10rem">
+
+    <Text
+        id="maintenanceReportedByColumnText"
+        text="Reported By" />
+
+</Column>
+<Column
+    id="maintenanceVendorColumn"
+    width="12rem">
+
+    <Text
+        id="maintenanceVendorColumnText"
+        text="Service Vendor" />
+
+</Column>
+                                        <Column id="reportedDateColumn">
+                                            <Text
+                                                id="reportedDateColumnText"
+                                                text="Reported Date" />
+                                        </Column>
+
+                                        <Column id="completedDateColumn">
+                                            <Text
+                                                id="completedDateColumnText"
+                                                text="Completed Date" />
+                                        </Column>
+                                        <Column id="nextDueDateColumn">
+    <Text
+        id="nextDueDateColumnText"
+        text="Next Due Date" />
+</Column>
+
+                                        <Column id="maintenanceStatusColumn">
+                                            <Text
+                                                id="maintenanceStatusColumnText"
+                                                text="Status" />
+                                        </Column>
+
+                                        <Column id="maintenanceOutcomeColumn">
+                                            <Text
+                                                id="maintenanceOutcomeColumnText"
+                                                text="Outcome" />
+                                        </Column>
+
+                                        <Column id="maintenanceCostColumn">
+                                            <Text
+                                                id="maintenanceCostColumnText"
+                                                text="Cost" />
+                                        </Column>
+                                        <Column id="maintenanceWarrantyColumn">
+    <Text
+        id="maintenanceWarrantyColumnText"
+        text="Warranty Covered" />
+</Column>
+
+                                    </columns>
+
+                                    <items>
+
+                                        <ColumnListItem
+                                            id="maintenanceReportRow"
+                                            type="Inactive">
+
+                                            <cells>
+
+                                                <Text
+                                                    id="maintenanceReportType"
+                                                    text="{maintenanceReport>type}" />
+                                                    <Text
+    id="maintenanceReportDescription"
+    text="{
+        path: 'maintenanceReport>description',
+        formatter: '.formatEmptyValue'
+    }"
+    wrapping="true"
+    maxLines="2"
+    tooltip="{maintenanceReport>description}" />
+
+    <Text
+    id="maintenanceReportReportedBy"
+    text="{
+        path: 'maintenanceReport>reportedByName',
+        formatter: '.formatEmptyValue'
+    }" />
+
+    <ObjectIdentifier
+    id="maintenanceReportVendor"
+    title="{
+        path: 'maintenanceReport>serviceVendorName',
+        formatter: '.formatEmptyValue'
+    }"
+     />
+
+    
+
+
+                                                <Text
+                                                    id="maintenanceReportedDate"
+                                                    text="{
+                                                        path: 'maintenanceReport>reportedDate',
+                                                        formatter: '.formatDate'
+                                                    }" />
+
+                                                <Text
+                                                    id="maintenanceCompletedDate"
+                                                    text="{
+                                                        path: 'maintenanceReport>completedDate',
+                                                        formatter: '.formatDate'
+                                                    }" />
+                                                    <Text
+    id="maintenanceNextDueDate"
+    text="{
+        path: 'maintenanceReport>nextDueDate',
+        formatter: '.formatDate'
+    }" />
+
+                                                <ObjectStatus
+                                                    id="maintenanceReportStatus"
+                                                    text="{maintenanceReport>status}"
+                                                    state="{
+                                                        path: 'maintenanceReport>status',
+                                                        formatter: '.formatMaintenanceState'
+                                                    }" />
+
+                                                <ObjectStatus
+                                                    id="maintenanceReportOutcome"
+                                                    text="{maintenanceReport>outcome}"
+                                                    state="{
+                                                        path: 'maintenanceReport>outcome',
+                                                        formatter: '.formatMaintenanceOutcomeState'
+                                                    }" />
+
+                                                <ObjectNumber
+                                                    id="maintenanceReportCost"
+                                                    number="{
+                                                        path: 'maintenanceReport>cost',
+                                                        formatter: '.formatMaintenanceCost'
+                                                    }"
+                                                     />
+                                                     <ObjectStatus
+    id="maintenanceReportWarranty"
+    text="{
+        path: 'maintenanceReport>coveredByWarranty',
+        formatter: '.formatWarrantyCoverage'
+    }"
+    state="{
+        path: 'maintenanceReport>coveredByWarranty',
+        formatter: '.formatWarrantyCoverageState'
+    }" />
+
+                                            </cells>
+
+                                        </ColumnListItem>
+
+                                    </items>
+
+                                </Table>
+
+                            </VBox>
+
+                        </IconTabFilter>
+
+                        <!-- Archive Report -->
+
+                        <IconTabFilter
+                            id="archiveReportTab"
+                            key="archive"
+                            text="Archive Report"
+                            icon="sap-icon://folder-full">
+
+                            <VBox
+                                id="archiveReportVBox"
+                                class="sapUiSmallMarginTop">
+
+                                <Title
+                                    id="archiveReportTitle"
+                                    text="Archive Report"
+                                    level="H2"
+                                    class="sapUiSmallMarginBottom" />
+
+                                <Table
+                                    id="archiveReportTable"
+                                    items="{archiveReport>/}"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    noDataText="No archive report records found">
+
+                                    <headerToolbar>
+
+                                        <OverflowToolbar
+                                            id="archiveReportToolbar">
+
+                                            <Title
+                                                id="archiveReportTableTitle"
+                                                text="Archive Records"
+                                                level="H3" />
+
+                                            <ToolbarSpacer
+                                                id="archiveReportToolbarSpacer" />
+
+                                            <ObjectStatus
+                                                id="archiveReportRecordCount"
+                                                text="Records: {= ${archiveReport>/}.length }"
+                                                state="Information" />
+
+                                        </OverflowToolbar>
+
+                                    </headerToolbar>
+
+                                    <columns>
+
+                                        <Column id="archivedAtColumn">
+                                            <Text
+                                                id="archivedAtColumnText"
+                                                text="Archived At" />
+                                        </Column>
+                                        <Column id="archivedByColumn">
+    <Text
+        id="archivedByColumnText"
+        text="Archived By" />
+</Column>
+
+                                        <Column id="archiveReasonColumn">
+                                            <Text
+                                                id="archiveReasonColumnText"
+                                                text="Reason" />
+                                        </Column>
+
+                                        <Column id="disposalMethodColumn">
+                                            <Text
+                                                id="disposalMethodColumnText"
+                                                text="Disposal Method" />
+                                        </Column>
+                                        <Column id="disposalCertNoColumn">
+    <Text
+        id="disposalCertNoColumnText"
+        text="Certificate Number" />
+</Column>
+
+                                    </columns>
+
+                                    <items>
+
+                                        <ColumnListItem
+                                            id="archiveReportRow"
+                                            type="Inactive">
+
+                                            <cells>
+
+                                                <Text
+                                                    id="archiveReportArchivedAt"
+                                                    text="{
+                                                        path: 'archiveReport>archivedAt',
+                                                        formatter: '.formatDateTime'
+                                                    }" />
+                                                    <Text
+    id="archiveReportArchivedBy"
+    text="{
+        path: 'archiveReport>archivedByName',
+        formatter: '.formatEmptyValue'
+    }" />
+
+                                                <ObjectStatus
+                                                    id="archiveReportReason"
+                                                    text="{
+                                                        path: 'archiveReport>reason',
+                                                        formatter: '.formatArchiveReason'
+                                                    }" />
+
+                                                <Text
+                                                    id="archiveReportDisposalMethod"
+                                                    text="{
+                                                        path: 'archiveReport>disposalMethod',
+                                                        formatter: '.formatDisposalMethod'
+                                                    }" />
+                                                    <Text
+    id="archiveReportDisposalCertNo"
+    text="{
+        path: 'archiveReport>disposalCertNo',
+        formatter: '.formatEmptyValue'
+    }" />
+
+                                            </cells>
+
+                                        </ColumnListItem>
+
+                                    </items>
+
+                                </Table>
+
+                            </VBox>
+
+                        </IconTabFilter>
+
+                    </items>
+
+                </IconTabBar>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

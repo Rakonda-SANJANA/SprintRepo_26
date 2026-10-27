@@ -1,0 +1,63 @@
+{
+  "name": "sprintproj",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@cap-js/hana": "^3",
+    "@sap/cds": "^10.1.1",
+    "@sap/xssec": "^4.15.0",
+    "exceljs": "^4.4.0",
+    "pdfkit": "^0.20.2"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "devDependencies": {
+    "cds-plugin-ui5": "^0.17.4"
+  },
+  "scripts": {
+    "watch-project1": "cds watch --open project1/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "sapux": [
+    "app/project1"
+  ],
+  "cds": {
+    "requires": {
+      "auth": {
+        "[development]": {
+          "kind": "mocked",
+          "users": {
+            "admin": {
+              "password": "admin",
+              "roles": [
+                "Admin"
+              ],
+              "attr": {
+                "employeeID": "33333333-3333-3333-3333-333333333333"
+              }
+            },
+            "manager": {
+              "password": "manager",
+              "roles": [
+                "Manager"
+              ],
+              "attr": {
+                "department": "IT",
+                "employeeID": "44444444-4444-4444-4444-444444444444"
+              }
+            },
+            "employee": {
+              "password": "employee",
+              "roles": [
+                "Employee"
+              ],
+              "attr": {
+                "employeeID": "11111111-1111-1111-1111-111111111111"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

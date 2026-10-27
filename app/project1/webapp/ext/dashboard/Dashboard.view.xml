@@ -1,0 +1,560 @@
+<mvc:View
+    controllerName="project1.ext.dashboard.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <Page
+        id="adminDashboardPage"
+        title="Dashboard">
+
+        <content>
+
+            <VBox
+                id="dashboardVBox"
+                class="sapUiMediumMargin">
+
+                <!-- Admin KPI Section -->
+
+                <Title
+                    id="dashboardTitle"
+                    text="Admin KPIs"
+                    level="H2" />
+                    <Toolbar
+    id="reportToolbar"
+    class="sapUiSmallMarginBottom">
+
+    <Title
+        id="reportToolbarTitle"
+        text="Report Exports"
+        level="H3" />
+
+    <ToolbarSpacer id="reportToolbarSpacer" />
+
+    <Button
+        id="exportPdfButton"
+        text="Export Asset PDF"
+        icon="sap-icon://pdf-attachment"
+        type="Emphasized"
+        press=".onExportPdf" />
+
+    <Button
+        id="exportExcelButton"
+        text="Export Asset Excel"
+        icon="sap-icon://excel-attachment"
+        press=".onExportExcel" />
+
+</Toolbar>
+                <HBox
+                    id="dashboardHBox"
+                    wrap="Wrap"
+                    justifyContent="Start">
+
+                    <GenericTile
+                        id="totalAssetsTile"
+                        header="Total Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="totalAssetsContent">
+                            <NumericContent
+                                id="totalAssetsNumber"
+                                value="{dashboard>/totalAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="availableAssetsTile"
+                        header="Available Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="availableAssetsContent">
+                            <NumericContent
+                                id="availableAssetsNumber"
+                                value="{dashboard>/availableAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="assignedAssetsTile"
+                        header="Assigned Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="assignedAssetsContent">
+                            <NumericContent
+                                id="assignedAssetsNumber"
+                                value="{dashboard>/assignedAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="maintenanceAssetsTile"
+                        header="Maintenance Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="maintenanceAssetsContent">
+                            <NumericContent
+                                id="maintenanceAssetsNumber"
+                                value="{dashboard>/maintenanceAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="retiredAssetsTile"
+                        header="Retired Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="retiredAssetsContent">
+                            <NumericContent
+                                id="retiredAssetsNumber"
+                                value="{dashboard>/retiredAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="archivedAssetsTile"
+                        header="Archived Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="archivedAssetsContent">
+                            <NumericContent
+                                id="archivedAssetsNumber"
+                                value="{dashboard>/archivedAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Manager KPI Section -->
+
+                <Title
+                    id="managerTitle"
+                    text="Manager KPIs"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <HBox
+                    id="managerHBox"
+                    wrap="Wrap"
+                    justifyContent="Start">
+
+                    <GenericTile
+                        id="totalAssignmentsTile"
+                        header="Total Assignments"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="totalAssignmentsContent">
+                            <NumericContent
+                                id="totalAssignmentsNumber"
+                                value="{manager>/totalAssignments}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="activeAssignmentsTile"
+                        header="Active Assignments"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="activeAssignmentsContent">
+                            <NumericContent
+                                id="activeAssignmentsNumber"
+                                value="{manager>/activeAssignments}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="returnedAssignmentsTile"
+                        header="Returned Assignments"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="returnedAssignmentsContent">
+                            <NumericContent
+                                id="returnedAssignmentsNumber"
+                                value="{manager>/returnedAssignments}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="transfersTile"
+                        header="Transfers"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="transfersContent">
+                            <NumericContent
+                                id="transfersNumber"
+                                value="{manager>/totalTransfers}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Employee KPI Section -->
+
+                <Title
+                    id="employeeTitle"
+                    text="Employee KPIs"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <HBox
+                    id="employeeHBox"
+                    wrap="Wrap"
+                    justifyContent="Start">
+
+                    <GenericTile
+                        id="assignedAssetsEmployeeTile"
+                        header="Assigned Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="assignedAssetsEmployeeContent">
+                            <NumericContent
+                                id="assignedAssetsEmployeeNumber"
+                                value="{employee>/assignedAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="returnedAssetsTile"
+                        header="Returned Assets"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="returnedAssetsContent">
+                            <NumericContent
+                                id="returnedAssetsNumber"
+                                value="{employee>/returnedAssets}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="maintenanceRequestsTile"
+                        header="Maintenance Requests"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="maintenanceRequestsContent">
+                            <NumericContent
+                                id="maintenanceRequestsNumber"
+                                value="{employee>/maintenanceRequests}" />
+                        </TileContent>
+
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Asset Status Donut Chart -->
+
+                <Title
+                    id="assetStatusChartTitle"
+                    text="Asset Status Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="assetStatusChart"
+                    vizType="donut"
+                    width="100%"
+                    height="400px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": true
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": false
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            data="{assetChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    name="Status"
+                                    value="{assetChart>status}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    name="Count"
+                                    value="{assetChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            uid="size"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            uid="color"
+                            type="Dimension"
+                            values="Status" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+                <!-- Assignment Status Column Chart -->
+
+                <Title
+                    id="assignmentStatusChartTitle"
+                    text="Assignment Status Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="assignmentStatusChart"
+                    vizType="column"
+                    width="100%"
+                    height="400px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": false
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": true,
+                                "position": "outside"
+                            }
+                        },
+                        "valueAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Number of Assignments"
+                            }
+                        },
+                        "categoryAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Assignment Status"
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            data="{assignmentChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    name="Status"
+                                    value="{assignmentChart>status}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    name="Count"
+                                    value="{assignmentChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            uid="valueAxis"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            uid="categoryAxis"
+                            type="Dimension"
+                            values="Status" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+                <!-- Maintenance Status Pie Chart -->
+
+                <Title
+                    id="maintenanceStatusChartTitle"
+                    text="Maintenance Status Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="maintenanceStatusChart"
+                    vizType="pie"
+                    width="100%"
+                    height="400px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": true
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": false
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            data="{maintenanceChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    name="Status"
+                                    value="{maintenanceChart>status}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    name="Count"
+                                    value="{maintenanceChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            uid="size"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            uid="color"
+                            type="Dimension"
+                            values="Status" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+                <!-- Archive Reason Column Chart -->
+
+                <Title
+                    id="archiveReasonChartTitle"
+                    text="Archive Reason Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="archiveReasonChart"
+                    vizType="column"
+                    width="100%"
+                    height="400px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": false
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": true,
+                                "position": "outside"
+                            }
+                        },
+                        "valueAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Number of Archived Assets"
+                            }
+                        },
+                        "categoryAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Archive Reason"
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            data="{archiveChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    name="Reason"
+                                    value="{archiveChart>reason}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    name="Count"
+                                    value="{archiveChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            uid="valueAxis"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            uid="categoryAxis"
+                            type="Dimension"
+                            values="Reason" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

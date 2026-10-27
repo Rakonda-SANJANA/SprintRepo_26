@@ -1,0 +1,210 @@
+<mvc:View
+    controllerName="project1.ext.dashboard.ManagerDashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <Page
+        id="roleManagerDashboardPage"
+        title="Manager Dashboard"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+
+        <content>
+
+            <VBox
+                id="managerDashboardVBox"
+                class="sapUiMediumMargin">
+
+                <!-- Manager KPI Cards -->
+
+                <Title
+                    id="managerKpiTitle"
+                    text="Assignment Management KPIs"
+                    level="H2" />
+
+                <HBox
+                    id="managerKpiHBox"
+                    wrap="Wrap"
+                    justifyContent="SpaceBetween">
+
+                    <!-- Total Assignments -->
+
+                    <GenericTile
+                        id="managerTotalAssignmentsTile"
+                        header="Total Assignments"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onTotalAssignmentsPress">
+
+                        <TileContent
+                            id="managerTotalAssignmentsContent">
+
+                            <NumericContent
+                                id="managerTotalAssignmentsNumber"
+                                value="{manager>/totalAssignments}" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Active Assignments -->
+
+                    <GenericTile
+                        id="managerActiveAssignmentsTile"
+                        header="Active Assignments"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onActiveAssignmentsPress">
+
+                        <TileContent
+                            id="managerActiveAssignmentsContent">
+
+                            <NumericContent
+                                id="managerActiveAssignmentsNumber"
+                                value="{manager>/activeAssignments}"
+                                valueColor="Good" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Returned Assignments -->
+
+                    <GenericTile
+                        id="managerReturnedAssignmentsTile"
+                        header="Returned"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onReturnedAssignmentsPress">
+
+                        <TileContent
+                            id="managerReturnedAssignmentsContent">
+
+                            <NumericContent
+                                id="managerReturnedAssignmentsNumber"
+                                value="{manager>/returnedAssignments}"
+                                valueColor="Neutral" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Total Transfers -->
+
+                    <GenericTile
+                        id="managerTransfersTile"
+                        header="Total Transfers"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onTotalTransfersPress">
+
+                        <TileContent
+                            id="managerTransfersContent">
+
+                            <NumericContent
+                                id="managerTransfersNumber"
+                                value="{manager>/totalTransfers}"
+                                valueColor="Critical" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Assignment Status Chart -->
+
+                <Title
+                    id="managerAssignmentStatusTitle"
+                    text="Assignment Status Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="managerAssignmentStatusChart"
+                    vizType="column"
+                    width="100%"
+                    height="300px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": false
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": true,
+                                "position": "outside"
+                            }
+                        },
+                        "valueAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Number of Assignments"
+                            }
+                        },
+                        "categoryAxis": {
+                            "title": {
+                                "visible": true,
+                                "text": "Assignment Status"
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            id="managerAssignmentStatusDataset"
+                            data="{assignmentChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    id="managerAssignmentStatusDimension"
+                                    name="Status"
+                                    value="{assignmentChart>status}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    id="managerAssignmentStatusMeasure"
+                                    name="Count"
+                                    value="{assignmentChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            id="managerAssignmentStatusValueFeed"
+                            uid="valueAxis"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            id="managerAssignmentStatusCategoryFeed"
+                            uid="categoryAxis"
+                            type="Dimension"
+                            values="Status" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

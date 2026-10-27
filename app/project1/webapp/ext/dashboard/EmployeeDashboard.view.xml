@@ -1,0 +1,177 @@
+<mvc:View
+    controllerName="project1.ext.dashboard.EmployeeDashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds">
+
+    <Page
+        id="roleEmployeeDashboardPage"
+        title="Employee Dashboard"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+
+        <content>
+
+            <VBox
+                id="employeeDashboardVBox"
+                class="sapUiMediumMargin">
+
+                <!-- Employee KPI Cards -->
+
+                <Title
+                    id="employeeKpiTitle"
+                    text="Employee Asset KPIs"
+                    level="H2" />
+
+                <HBox
+                    id="employeeKpiHBox"
+                    wrap="Wrap"
+                    justifyContent="SpaceBetween">
+
+                    <!-- Assigned Assets -->
+
+                    <GenericTile
+                        id="employeeAssignedAssetsTile"
+                        header="Assigned Assets"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onAssignedAssetsPress">
+
+                        <TileContent
+                            id="employeeAssignedAssetsContent">
+
+                            <NumericContent
+                                id="employeeAssignedAssetsNumber"
+                                value="{employee>/assignedAssets}"
+                                valueColor="Good" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Returned Assets -->
+
+                    <GenericTile
+                        id="employeeReturnedAssetsTile"
+                        header="Returned Assets"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onReturnedAssetsPress">
+
+                        <TileContent
+                            id="employeeReturnedAssetsContent">
+
+                            <NumericContent
+                                id="employeeReturnedAssetsNumber"
+                                value="{employee>/returnedAssets}"
+                                valueColor="Neutral" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- Maintenance Requests -->
+
+                    <GenericTile
+                        id="employeeMaintenanceRequestsTile"
+                        header="Maintenance"
+                        frameType="OneByHalf"
+                        class="sapUiSmallMargin"
+                        press=".onMaintenanceRequestsPress">
+
+                        <TileContent
+                            id="employeeMaintenanceRequestsContent">
+
+                            <NumericContent
+                                id="employeeMaintenanceRequestsNumber"
+                                value="{employee>/maintenanceRequests}"
+                                valueColor="Critical" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </HBox>
+
+                <!-- Maintenance Status Pie Chart -->
+
+                <Title
+                    id="employeeMaintenanceStatusTitle"
+                    text="Maintenance Status Distribution"
+                    level="H2"
+                    class="sapUiMediumMarginTop" />
+
+                <viz:VizFrame
+                    id="employeeMaintenanceStatusChart"
+                    vizType="pie"
+                    width="100%"
+                    height="300px"
+                    vizProperties='{
+                        "title": {
+                            "visible": false
+                        },
+                        "legend": {
+                            "visible": true
+                        },
+                        "plotArea": {
+                            "dataLabel": {
+                                "visible": false
+                            }
+                        }
+                    }'>
+
+                    <viz:dataset>
+
+                        <viz.data:FlattenedDataset
+                            id="employeeMaintenanceStatusDataset"
+                            data="{maintenanceChart>/}">
+
+                            <viz.data:dimensions>
+
+                                <viz.data:DimensionDefinition
+                                    id="employeeMaintenanceStatusDimension"
+                                    name="Status"
+                                    value="{maintenanceChart>status}" />
+
+                            </viz.data:dimensions>
+
+                            <viz.data:measures>
+
+                                <viz.data:MeasureDefinition
+                                    id="employeeMaintenanceStatusMeasure"
+                                    name="Count"
+                                    value="{maintenanceChart>count}" />
+
+                            </viz.data:measures>
+
+                        </viz.data:FlattenedDataset>
+
+                    </viz:dataset>
+
+                    <viz:feeds>
+
+                        <viz.feeds:FeedItem
+                            id="employeeMaintenanceStatusSizeFeed"
+                            uid="size"
+                            type="Measure"
+                            values="Count" />
+
+                        <viz.feeds:FeedItem
+                            id="employeeMaintenanceStatusColorFeed"
+                            uid="color"
+                            type="Dimension"
+                            values="Status" />
+
+                    </viz:feeds>
+
+                </viz:VizFrame>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>
